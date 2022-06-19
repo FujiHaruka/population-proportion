@@ -1,10 +1,8 @@
 import { Component, createSignal } from "solid-js";
 
-import styles from "./App.module.css";
-
 type ConfidenceInterval = 0.9 | 0.95 | 0.99;
 const CIFormats = new Map<ConfidenceInterval, string>([
-  [0.9, "99%"],
+  [0.9, "90%"],
   [0.95, "95%"],
   [0.99, "99%"],
 ]);
@@ -83,17 +81,35 @@ const App: Component = () => {
               }}
             >
               {[...CIFormats.keys()].map((value) => (
-                <option value={value}>{CIFormats.get(value)}</option>
+                <option value={value} selected={value === confidenceInterval()}>
+                  {CIFormats.get(value)}
+                </option>
               ))}
             </select>
           </label>
         </form>
-        <div>
+        <section>
           <h3>Result</h3>
-          <div>
-            {lowerBound().toFixed(3)} - {upperBound().toFixed(3)}
-          </div>
-        </div>
+          <div
+            innerHTML={
+              window.MathJax.tex2svg(
+                `${lowerBound().toFixed(
+                  3
+                )} \\leq p \\leq ${upperBound().toFixed(3)}`
+              ).outerHTML
+            }
+          ></div>
+        </section>
+        <section>
+          <h3>Confidence Interval of Population Proportion</h3>
+          <div
+            innerHTML={
+              window.MathJax.tex2svg(
+                `\\hat{p} \\pm z_{\\alpha / 2} \\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}`
+              ).outerHTML
+            }
+          ></div>
+        </section>
       </main>
     </>
   );
