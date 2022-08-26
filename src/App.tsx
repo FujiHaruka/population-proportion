@@ -70,10 +70,10 @@ const App: Component = () => {
               id="successes"
             />
           </label>
-          <label for="confidence-interval">
-            Confidence Interval: <b>{CIFormats.get(confidenceInterval())}</b>
+          <label for="confidence-coefficient">
+            Confidence Coefficient: <b>{CIFormats.get(confidenceInterval())}</b>
             <select
-              id="confidence-interval"
+              id="confidence-coefficient"
               onChange={(ev) => {
                 setConfidenceInterval(
                   Number(ev.currentTarget.value) as ConfidenceInterval
